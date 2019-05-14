@@ -1,6 +1,9 @@
 winapi
 ======
 
+This is a work-in-progress. I'm only adding things that I need right now.
+Some stuff is copied from other projects I have and as such may not actually function.
+
 I wanted to use some Windows APIs, but in a fashion that didn't make me want to tear my hair out.
 So I wrote some wrappers for Windows APIs to make them feel "like Go" so I don't have to
 tear my hair out later.
