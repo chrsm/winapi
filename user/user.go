@@ -22,7 +22,9 @@ var (
 	pUnregisterHotkey         = userapi.NewProc("UnregisterHotKey")
 	pIsWindowVisible          = userapi.NewProc("IsWindowVisible")
 	pGetForegroundWindow      = userapi.NewProc("GetForegroundWindow")
+	pSetForegroundWindow      = userapi.NewProc("SetForegroundWindow")
 	pGetWindowThreadProcessId = userapi.NewProc("GetWindowThreadProcessId")
+	pGetActiveWindow          = userapi.NewProc("GetActiveWindow")
 )
 
 type EnumWindowsCallback func(window winapi.HWND, v winapi.LPARAM) uintptr
@@ -65,7 +67,7 @@ func GetWindowInfo(window winapi.HWND) (*WindowInfo, error) {
 	return info, nil
 }
 
-func RegisterHotkey(window winapi.HWND, id int, modifiers modKey, vk virtualKey) bool {
+func RegisterHotkey(window winapi.HWND, id int, modifiers ModKey, vk VirtualKey) bool {
 	ret, _, _ := pRegisterHotkey.Call(
 		uintptr(window),
 		uintptr(id),
@@ -99,6 +101,12 @@ func GetForegroundWindow() winapi.HWND {
 	return winapi.HWND(ret)
 }
 
+func SetForegroundWindow(window winapi.HWND) bool {
+	ret, _, _ := pSetForegroundWindow.Call(uintptr(window))
+
+	return ret != 0
+}
+
 func GetMessage(window winapi.HWND, filterMin, filterMax uint) (*Message, bool) {
 	msg := &Message{}
 	ret, _, _ := pGetMessage.Call(
@@ -120,4 +128,10 @@ func GetWindowThreadProcessId(window winapi.HWND) (winapi.HANDLE, int) {
 	)
 
 	return winapi.HANDLE(ret), pid
+}
+
+func GetActiveWindow() winapi.HWND {
+	ret, _, _ := pGetActiveWindow.Call()
+
+	return winapi.HWND(ret)
 }

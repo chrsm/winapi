@@ -15,4 +15,11 @@ type (
 	Rect struct {
 		Left, Top, Right, Bottom LONG
 	}
+
+	GUID struct {
+		Data1 DWORD
+		Data2 WORD
+		Data3 WORD
+		Data4 [8]byte
+	}
 )
