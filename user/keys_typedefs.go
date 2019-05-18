@@ -1,64 +1,9 @@
 package user
 
-import (
-	"unsafe"
-
-	"github.com/chrsm/winapi"
+type (
+	ModKey     uint
+	VirtualKey uint
 )
-
-type Message struct {
-	HWnd     winapi.HWND
-	Message  uint
-	WParam   winapi.WPARAM
-	LParam   winapi.LPARAM
-	Time     winapi.DWORD
-	Point    Point
-	LPrivate winapi.DWORD
-}
-
-type Point struct {
-	X, Y winapi.LONG
-}
-
-var szWindowInfo = winapi.DWORD(unsafe.Sizeof(WindowInfo{}))
-
-type swFlags int
-
-const (
-	SwForceMinimize   swFlags = 11
-	SwHide                    = 0
-	SwMaximize                = 3
-	SwMinimize                = 6
-	SwRestore                 = 9
-	SwShow                    = 5
-	SwShowDefault             = 6
-	SwShowMaximized           = SwMaximize
-	SwShowMinimized           = 2
-	SwShowMinNoActive         = 7
-	SwShowNA                  = 8
-	SwShowNoActivate          = 4
-	SwShowNormal              = 1
-)
-
-type WindowInfo struct {
-	CbSize winapi.DWORD
-
-	RcWindow winapi.Rect
-	RcClient winapi.Rect
-
-	DwStyle        winapi.DWORD
-	DwExStyle      winapi.DWORD
-	DwWindowStatus winapi.DWORD
-
-	CxWindowBorders uint
-	CyWindowBorders uint
-
-	AtomWindowType winapi.ATOM
-
-	WCreatorVersion winapi.WORD
-}
-
-type ModKey uint
 
 const (
 	ModAlt      ModKey = 0x0001
@@ -68,21 +13,6 @@ const (
 	ModWin             = 0x0008
 	ModNone            = 0x0000
 )
-
-var modKeyMap = map[string]ModKey{
-	"Alt":      ModAlt,
-	"Control":  ModControl,
-	"NoRepeat": ModNoRepeat,
-	"Shift":    ModShift,
-	"Win":      ModWin,
-	"None":     ModNone,
-}
-
-func GetModKeyByName(name string) ModKey {
-	return modKeyMap[name]
-}
-
-type VirtualKey uint
 
 const (
 	VirtKeyZero  VirtualKey = 0x30
@@ -195,6 +125,15 @@ const (
 	VirtKeySnapshot    = VirtKeyPrintScreen
 )
 
+var modKeyMap = map[string]ModKey{
+	"Alt":      ModAlt,
+	"Control":  ModControl,
+	"NoRepeat": ModNoRepeat,
+	"Shift":    ModShift,
+	"Win":      ModWin,
+	"None":     ModNone,
+}
+
 var virtualKeyMap = map[string]VirtualKey{
 	"Zero":         VirtKeyZero,
 	"One":          VirtKeyOne,
@@ -296,21 +235,12 @@ var virtualKeyMap = map[string]VirtualKey{
 	"SingleQuote":  VirtKeySingleQuote,
 }
 
+// GetVirtualKeyByName takes a the name of a key and returns the VK_* code for it.
 func GetVirtualKeyByName(name string) VirtualKey {
 	return virtualKeyMap[name]
 }
 
-type windowMessage uint
-
-const (
-	WmNull   windowMessage = 0x0000
-	WmQuit                 = 0x0012
-	WmHotkey               = 0x0312
-)
-
-type windowStyle uint
-
-const (
-	WsVisible      windowStyle = 0x10000000
-	WsExToolWindow             = 0x0000008
-)
+// GetModKeyByName takes the name of a modifier key and returns the ModKey* code for it.
+func GetModKeyByName(name string) ModKey {
+	return modKeyMap[name]
+}
