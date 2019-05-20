@@ -23,17 +23,17 @@ type CallWndProc struct {
 const (
 	// see docs:
 	// https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms644977(v=vs.85)
-	HBCTActivateWindow int = 5
-	HBCTCreateWindow       = 3
-	HBCTDestroyWindow      = 4
-	HBCTMinMax             = 1
-	HBCTMoveSize           = 0
-	HBCTSetFocus           = 9
+	HBCTActivateWindow = 5
+	HBCTCreateWindow   = 3
+	HBCTDestroyWindow  = 4
+	HBCTMinMax         = 1
+	HBCTMoveSize       = 0
+	HBCTSetFocus       = 9
 )
 
 const (
-	HShellWindowActivated int = 4
-	HShellWindowCreated       = 1
-	HShellWindowDestroyed     = 2
-	HShellWindowReplaced      = 13
+	HShellWindowActivated = 4
+	HShellWindowCreated   = 1
+	HShellWindowDestroyed = 2
+	HShellWindowReplaced  = 13
 )

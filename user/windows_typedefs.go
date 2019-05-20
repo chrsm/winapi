@@ -68,6 +68,27 @@ type (
 )
 
 const (
+	GwChild        = 5
+	GwEnabledPopup = 6
+	GwFirst        = 0
+	GwLast         = 1
+	GwNext         = 2
+	GwPrev         = 3
+	GwOwner        = 4
+
+	GwlExStyle  = -20
+	GwlInstance = -6
+	GwlParent   = -8
+	GwlId       = -12
+	GwlStyle    = -16
+	GwlUserData = -21
+	GwlWndProc  = -4
+
+	HwndBottom    = 1
+	HwndNoTopMost = -2
+	HwndTop       = 0
+	HwndTopMost   = -1
+
 	SwForceMinimize   = 11
 	SwHide            = 0
 	SwMaximize        = 3
@@ -82,11 +103,27 @@ const (
 	SwShowNoActivate  = 4
 	SwShowNormal      = 1
 
+	SwpAsyncWindowPos = 0x4000
+	SwpDeferErase     = 0x2000
+	SwpDrawFrame      = 0x0020
+	SwpFrameChanged   = 0x0020
+	SwpHideWindow     = 0x0080
+	SwpNoActivate     = 0x0010
+	SwpNoCopyBits     = 0x0100
+	SwpNoMove         = 0x0002
+	SwpNoOwnerZOrder  = 0x0200
+	SwpNoRedraw       = 0x0008
+	SwpNoReposition   = 0x0200
+	SwpNoSendChanging = 0x0400
+	SwpNoZOrder       = 0x0001
+	SwpShowWindow     = 0x0040
+
 	WmNull   = 0x0000
 	WmQuit   = 0x0012
 	WmHotkey = 0x0312
 
-	WsVisible = 0x10000000
+	WsDisabled = 0x08000000
+	WsVisible  = 0x10000000
 
 	WsExAcceptFiles         = 0x00000010
 	WsExAppWindow           = 0x00040000

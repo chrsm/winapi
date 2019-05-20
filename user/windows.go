@@ -14,16 +14,26 @@ var (
 	pDispatchMessage          = userapi.NewProc("DispatchMessageW")
 	pEnumWindows              = userapi.NewProc("EnumWindows")
 	pGetActiveWindow          = userapi.NewProc("GetActiveWindow")
+	pGetClassName             = userapi.NewProc("GetClassNameW")
+	pGetDesktopWindow         = userapi.NewProc("GetDesktopWindow")
 	pGetForegroundWindow      = userapi.NewProc("GetForegroundWindow")
 	pGetMessage               = userapi.NewProc("GetMessageW")
+	pGetParent                = userapi.NewProc("GetParent")
+	pGetWindow                = userapi.NewProc("GetWindow")
 	pGetWindowInfo            = userapi.NewProc("GetWindowInfo")
+	pGetWindowLong            = userapi.NewProc("GetWindowLongW")
+	pGetWindowText            = userapi.NewProc("GetWindowTextW")
+	pGetWindowTextLength      = userapi.NewProc("GetWindowTextLengthW")
 	pGetWindowThreadProcessId = userapi.NewProc("GetWindowThreadProcessId")
+	pIsWindow                 = userapi.NewProc("IsWindow")
 	pIsWindowVisible          = userapi.NewProc("IsWindowVisible")
 	pPostQuitMessage          = userapi.NewProc("PostQuitMessage")
 	pTranslateMessage         = userapi.NewProc("TranslateMessage")
 	pRegisterClassEx          = userapi.NewProc("RegisterClassExW")
 	pRegisterWindowMessage    = userapi.NewProc("RegisterWindowMessageA")
+	pSetFocus                 = userapi.NewProc("SetFocus")
 	pSetForegroundWindow      = userapi.NewProc("SetForegroundWindow")
+	pSetWindowPos             = userapi.NewProc("SetWindowPos")
 	pShowWindow               = userapi.NewProc("ShowWindow")
 )
 
@@ -177,4 +187,82 @@ func RegisterClass(wc *WindowClass) uint16 {
 	ret, _, _ := pRegisterClassEx.Call(uintptr(unsafe.Pointer(wc)))
 
 	return uint16(ret)
+}
+
+func GetParent(hwnd winapi.HWND) winapi.HWND {
+	ret, _, _ := pGetParent.Call(uintptr(hwnd))
+
+	return winapi.HWND(ret)
+}
+
+func GetWindow(hwnd winapi.HWND, cmd uint) winapi.HWND {
+	ret, _, _ := pGetWindow.Call(uintptr(hwnd), uintptr(cmd))
+
+	return winapi.HWND(ret)
+}
+
+func GetWindowLong(hwnd winapi.HWND, index int) uint32 {
+	ret, _, _ := pGetWindowLong.Call(uintptr(hwnd), uintptr(index))
+
+	return uint32(ret)
+}
+
+func GetWindowText(hwnd winapi.HWND, dst []uint16) string {
+	ret, _, _ := pGetWindowText.Call(
+		uintptr(hwnd),
+		uintptr(unsafe.Pointer(&dst[0])),
+		uintptr(len(dst)), // max length
+	)
+
+	_ = ret
+
+	return syscall.UTF16ToString(dst)
+}
+
+func GetWindowTextLength(hwnd winapi.HWND) int {
+	ret, _, _ := pGetWindowTextLength.Call(uintptr(hwnd))
+
+	return int(ret)
+}
+
+func IsWindow(hwnd winapi.HWND) bool {
+	ret, _, _ := pIsWindow.Call(uintptr(hwnd))
+
+	return ret != 0
+}
+
+func GetDesktopWindow() winapi.HWND {
+	ret, _, _ := pGetDesktopWindow.Call()
+
+	return winapi.HWND(ret)
+}
+
+func GetClassName(hwnd winapi.HWND, dst []uint16) string {
+	ret, _, _ := pGetClassName.Call(
+		uintptr(hwnd),
+		uintptr(unsafe.Pointer(&dst[0])),
+		uintptr(len(dst)), // max length
+	)
+
+	_ = ret
+
+	return syscall.UTF16ToString(dst)
+}
+
+func SetFocus(hwnd winapi.HWND) {
+	pSetFocus.Call(uintptr(hwnd))
+}
+
+func SetWindowPos(hwnd winapi.HWND, hwndAfter winapi.HWND, x, y, width, height int, flags uint) bool {
+	ret, _, _ := pSetWindowPos.Call(
+		uintptr(hwnd),
+		uintptr(hwndAfter),
+		uintptr(x),
+		uintptr(y),
+		uintptr(width),
+		uintptr(height),
+		uintptr(flags),
+	)
+
+	return ret != 0
 }
