@@ -1,6 +1,8 @@
 winapi
 ======
 
+[![GoDoc](https://godoc.org/github.com/chrsm/winapi?status.svg)](https://godoc.org/github.com/chrsm/winapi)
+
 This is a work-in-progress. I'm only adding things that I need right now.
 Some stuff is copied from other projects I have and as such may not actually function.
 
@@ -14,6 +16,8 @@ I recommend reading the godoc for each package.
 
 Supported APIs
 ==============
+
+- user: APIs from user32.dll / winuser.h
 
 - wslapi:
   - wsl.ConfigureDistribution = WslConfigureDistribution
