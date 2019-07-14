@@ -88,6 +88,9 @@ const (
 	HwndNoTopMost = -2
 	HwndTop       = 0
 	HwndTopMost   = -1
+	HwndBroadcast = 0xFFFF
+
+	ScMonitorPower = 0xF170
 
 	SwForceMinimize   = 11
 	SwHide            = 0
@@ -118,9 +121,10 @@ const (
 	SwpNoZOrder       = 0x0001
 	SwpShowWindow     = 0x0040
 
-	WmNull   = 0x0000
-	WmQuit   = 0x0012
-	WmHotkey = 0x0312
+	WmNull       = 0x0000
+	WmQuit       = 0x0012
+	WmHotkey     = 0x0312
+	WmSysCommand = 0x0112
 
 	WsDisabled = 0x08000000
 	WsVisible  = 0x10000000

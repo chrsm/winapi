@@ -31,6 +31,7 @@ var (
 	pTranslateMessage         = userapi.NewProc("TranslateMessage")
 	pRegisterClassEx          = userapi.NewProc("RegisterClassExW")
 	pRegisterWindowMessage    = userapi.NewProc("RegisterWindowMessageA")
+	pSendMessage              = userapi.NewProc("SendMessageW")
 	pSetFocus                 = userapi.NewProc("SetFocus")
 	pSetForegroundWindow      = userapi.NewProc("SetForegroundWindow")
 	pSetWindowPos             = userapi.NewProc("SetWindowPos")
@@ -265,4 +266,17 @@ func SetWindowPos(hwnd winapi.HWND, hwndAfter winapi.HWND, x, y, width, height i
 	)
 
 	return ret != 0
+}
+
+func SendMessage(hwnd winapi.HWND, msg uint, wparam winapi.WPARAM, lparam winapi.LPARAM) {
+	ret, _, _ := pSendMessage.Call(
+		uintptr(hwnd),
+		uintptr(msg),
+		uintptr(wparam),
+		uintptr(lparam),
+	)
+
+	// @TODO(chrsm): there's a bunch of different ways to handle lresult,
+	// should probably just hand it back to the caller..
+	_ = ret
 }
