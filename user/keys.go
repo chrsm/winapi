@@ -1,10 +1,15 @@
 package user
 
-import "github.com/chrsm/winapi"
+import (
+	"unsafe"
+
+	"github.com/chrsm/winapi"
+)
 
 var (
 	pRegisterHotkey   = userapi.NewProc("RegisterHotKey")
 	pUnregisterHotkey = userapi.NewProc("UnregisterHotKey")
+	pGetKeyboardState = userapi.NewProc("GetKeyboardState")
 )
 
 func RegisterHotkey(window winapi.HWND, id int, modifiers ModKey, vk VirtualKey) bool {
@@ -25,4 +30,18 @@ func UnregisterHotkey(window winapi.HWND, id int) bool {
 	)
 
 	return ret != 0
+}
+
+func GetKeyboardState() []byte {
+	state := [256]byte{}
+
+	ret, _, _ := pGetKeyboardState.Call(
+		uintptr(unsafe.Pointer(&state)),
+	)
+
+	if ret == 0 {
+		return nil
+	}
+
+	return state[:]
 }

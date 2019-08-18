@@ -244,3 +244,23 @@ func GetVirtualKeyByName(name string) VirtualKey {
 func GetModKeyByName(name string) ModKey {
 	return modKeyMap[name]
 }
+
+func GetModKeyName(mod ModKey) string {
+	for i := range modKeyMap {
+		if mod == modKeyMap[i] {
+			return i
+		}
+	}
+
+	return "<invalid>"
+}
+
+func GetVirtualKeyName(vk VirtualKey) string {
+	for i := range virtualKeyMap {
+		if vk == virtualKeyMap[i] {
+			return i
+		}
+	}
+
+	return "<invalid>"
+}

@@ -123,8 +123,12 @@ const (
 
 	WmNull       = 0x0000
 	WmQuit       = 0x0012
-	WmHotkey     = 0x0312
+	WmKeyDown    = 0x0100
+	WmKeyUp      = 0x0101
+	WmSysKeyDown = 0x0104
+	WmSysKeyUp   = 0x0105
 	WmSysCommand = 0x0112
+	WmHotkey     = 0x0312
 
 	WsDisabled = 0x08000000
 	WsVisible  = 0x10000000

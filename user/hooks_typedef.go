@@ -8,9 +8,10 @@ type HookFn func(int, winapi.WPARAM, winapi.LPARAM) uintptr
 type windowsHookType int
 
 const (
-	WindowsHookCBT         windowsHookType = 5
-	WindowsHookShell                       = 10
-	WindowsHookCallWndProc                 = 12
+	WindowsHookCBT              windowsHookType = 5
+	WindowsHookShell                            = 10
+	WindowsHookCallWndProc                      = 12
+	WindowsHookKeyboardLowLevel                 = 13
 )
 
 type CallWndProc struct {
@@ -37,3 +38,11 @@ const (
 	HShellWindowDestroyed = 2
 	HShellWindowReplaced  = 13
 )
+
+type KBDLLHOOKSTRUCT struct {
+	VKCode      winapi.DWORD
+	ScanCode    winapi.DWORD
+	Flags       winapi.DWORD
+	Time        winapi.DWORD
+	DwExtraInfo winapi.ULONG_PTR
+}

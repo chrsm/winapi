@@ -24,7 +24,7 @@ func SetWindowsHookEx(typ windowsHookType, fn HookFn, hmod uintptr, thread winap
 	return Hook(ret)
 }
 
-func CallNextHook(hook Hook, ncode int, wparam winapi.WPARAM, lparam winapi.LPARAM) Hook {
+func CallNextHook(hook Hook, ncode int, wparam winapi.WPARAM, lparam winapi.LPARAM) uintptr {
 	ret, _, _ := pCallNextHookEx.Call(
 		uintptr(hook),
 		uintptr(ncode),
@@ -32,7 +32,7 @@ func CallNextHook(hook Hook, ncode int, wparam winapi.WPARAM, lparam winapi.LPAR
 		uintptr(lparam),
 	)
 
-	return Hook(ret)
+	return ret
 }
 
 func UnhookWindowsHookEx(hook Hook) bool {
